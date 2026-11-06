@@ -593,3 +593,140 @@ STOP and wait for my approval.
 DO NOT START MILESTONE 2 AUTOMATICALLY.
 
 The goal is to build a complete, professional, secure, production-ready Healthcare Management System through controlled, sequential GitHub milestone development.
+github token: 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Task: Create GitHub Milestones and Issues Directly in the Repository
+
+Act as a professional GitHub project manager and senior software engineer.
+
+Your task is to create and manage project milestones and their associated issues directly in the GitHub repository using GitHub's Milestones and Issues sections.
+
+Repository:
+https://github.com/developertdsl-prog/Healthcare-Management-System
+
+1. Analyze the project
+Inspect the complete repository structure.
+Read the README, source code, documentation, and configuration files.
+Understand the project's purpose, features, technology stack, and development requirements.
+Divide the project into logical development phases.
+2. Create GitHub milestones
+
+Navigate to the repository's GitHub Issues → Milestones section.
+
+Create meaningful milestones for each development phase.
+
+Example milestones:
+
+Project Setup
+Database Design and Configuration
+Authentication and Authorization
+Patient Management
+Doctor Management
+Appointment Management
+Medical Records Management
+Billing and Payments
+Admin Dashboard
+Testing and Bug Fixes
+Deployment and Documentation
+
+For each milestone:
+
+Add a clear title.
+Write a detailed description.
+Set a realistic due date when appropriate.
+Avoid duplicate milestones.
+Use the correct milestone numbering and development sequence.
+3. Create GitHub issues
+
+Navigate to the repository's GitHub Issues section.
+
+Create individual issues for all tasks required to complete each milestone.
+
+Every issue must include:
+
+Clear and descriptive title.
+Detailed task description.
+Objectives and implementation requirements.
+Acceptance criteria.
+Relevant technical details.
+Appropriate labels.
+Assignment to the correct milestone.
+
+Example:
+
+Issue Title: Set up the project structure
+
+Description: Create the initial project structure and configure the required development environment.
+
+Tasks:
+
+Create the required directories.
+Configure dependencies.
+Add environment configuration.
+Set up the application entry point.
+Update README documentation.
+
+Acceptance Criteria:
+
+Project structure is created.
+Dependencies install successfully.
+Application starts without errors.
+Documentation is updated.
+4. Connect issues to milestones
+
+IMPORTANT:
+
+Every issue must be assigned to its appropriate GitHub milestone.
+Do not create issues without milestone assignments unless genuinely necessary.
+Ensure that all issues belong to the correct development phase.
+Avoid duplicate issues.
+Maintain logical issue numbering and development order.
+5. Create a branch for every milestone
+
+Use this branch naming convention:
+
+milestone/01-project-setup milestone/02-database-design milestone/03-authentication milestone/04-patient-management
+
+Create each branch from the appropriate base branch.
+
+Do not overwrite existing branches or delete existing work.
+
+6. Verify everything on GitHub
+
+After creating milestones, issues, and branches, independently verify them using the GitHub API, GitHub CLI, or repository interface.
+
+Check:
+
+Every milestone exists in the repository's Milestones section.
+Every issue exists in the repository's Issues section.
+Every issue is assigned to the correct milestone.
+Every milestone has its corresponding branch.
+No duplicate milestones or issues were created.
+All GitHub URLs are valid and accessible.
+
+Do not rely only on successful API responses. Fetch the created resources again to confirm their existence.
+
+7. Final report
+
+Provide a completion report containing:
+
+Repository name and URL.
+Total milestones created.
+Total issues created.
+Total branches created.
+Milestone titles and descriptions.
+Issue numbers and titles grouped by milestone.
+Direct GitHub URLs for every milestone and issue.
+Branch URLs.
+Verification results.
+Any errors or incomplete tasks.
+IMPORTANT RULES
+Perform the actual operations on GitHub. Do not just generate a plan.
+Use the correct repository: developertdsl-prog/Healthcare-Management-System.
+Create milestones in the GitHub Milestones section.
+Create issues in the GitHub Issues section.
+Assign every issue to its corresponding milestone.
+Create milestone-specific branches.
+Never claim something was created unless it has been verified on GitHub.
+Preserve all existing repository files, branches, issues, and milestones.
+If GitHub authentication or permissions are missing, explain what access is required instead of pretending the operation succeeded.
+
+Expected result: A fully organized GitHub project with actual milestones, properly assigned issues, milestone-specific branches, and verified GitHub links.
