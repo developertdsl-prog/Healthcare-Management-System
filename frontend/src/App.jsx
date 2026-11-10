@@ -4,7 +4,7 @@ import AdminDashboard from './pages/AdminDashboard';
 import DoctorDashboard from './pages/DoctorDashboard';
 import ReceptionistDashboard from './pages/ReceptionistDashboard';
 import PatientDashboard from './pages/PatientDashboard';
-import AppointmentManagement from './pages/AppointmentManagement';
+import MedicalRecords from './pages/MedicalRecords';
 
 const App = () => {
   const [currentPage, setCurrentPage] = useState('dashboard');
@@ -15,7 +15,7 @@ const App = () => {
     doctors: <DoctorDashboard key="doctors" />,
     patients: <PatientDashboard key="patients" />,
     receptionist: <ReceptionistDashboard key="receptionist" />,
-    appointment-management: <AppointmentManagement key="appointment-management" />,
+    'medical-records': <MedicalRecords key="medical-records" />,
   };
 
   return (

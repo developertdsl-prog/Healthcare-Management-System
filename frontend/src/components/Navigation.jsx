@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { 
   Layout, Users2, Stethoscope, Calendar, Shield, FileText, Package, 
   TrendingUp, Users as UsersIcon, Activity, LogOut, 
-  Home, Settings, User, Mail, Heart, Clipboard, CalendarDays 
+  Home, Settings, User, Mail, Heart, Clipboard, Stethoscope as Stethoscope2 
 } from 'lucide-react';
 
 const NavItem = ({ 
@@ -54,15 +54,15 @@ export const Navigation = ({ currentPage, setCurrentPage }) => (
     />
     <NavItem 
       label="Appointments" 
-      icon={CalendarDays} 
-      onSelect={(page) => setCurrentPage('appointment-management')} 
+      icon={Calendar} 
+      onSelect={(page) => setCurrentPage('appointments')} 
       currentPage={currentPage} 
       setCurrentPage={setCurrentPage}
     />
     <NavItem 
-      label="Records" 
-      icon={Shield} 
-      onSelect={(page) => setCurrentPage('records')} 
+      label="Medical Records" 
+      icon={Stethoscope2} 
+      onSelect={(page) => setCurrentPage('medical-records')} 
       currentPage={currentPage} 
       setCurrentPage={setCurrentPage}
     />
