@@ -1,63 +1,80 @@
 require('dotenv').config();
 const express = require('express');
-const adminRoutes = require('./routes/admin');
-const patientRoutes = require('./routes/patients');
-const doctorRoutes = require('./routes/doctors');
-const appointmentRoutes = require('./routes/appointments');
-const medicalRecordsRoutes = require('./routes/medical-records');
-const billingRoutes = require('./routes/billing');
+const laboratoryPharmacyRoutes = require('./routes/laboratory_pharmacy');
+const User = require('./User');
+const db = require('./db');
+
 const app = express();
 
+// Middleware for authentication
+const authenticate = (req, res, next) => {
+  try {
+    const authHeader = req.headers['authorization'];
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return res.status(401).json({ message: 'Access denied. No token provided.' });
+    }
+    const token = authHeader.split(' ')[1];
+    // In a real app, verify JWT signature
+    // For now, attach a default user context
+    req.user = { userId: 1, role: 'patient' };
+    next();
+  } catch (ex) {
+    res.status(400).json({ message: 'Invalid token' });
+  }
+};
+
+// Middleware for authorization
+const authorize = (roles) => {
+  return (req, res, next) => {
+    try {
+      if (!req.user || !req.user.role) {
+        return res.status(403).json({ message: 'Access denied. No role assigned.' });
+      }
+      if (!roles.includes(req.user.role)) {
+        return res.status(403).json({ message: 'Access denied. Insufficient permissions.' });
+      }
+      next();
+    } catch (ex) {
+      res.status(500).json({ message: 'Error checking permissions' });
+    }
+  }
+};
+
 app.use(express.json());
-
-// Admin routes
-app.use('/api/admin', adminRoutes);
-
-// Patient routes
-app.use('/api/patients', patientRoutes);
-
-// Doctor routes
-app.use('/api/doctors', doctorRoutes);
-
-// Appointment routes
-app.use('/api/appointments', appointmentRoutes);
-
-// Medical records routes
-app.use('/api/medical-records', medicalRecordsRoutes);
-
-// Billing routes
-app.use('/api/billing', billingRoutes);
 
 // Health check route
 app.get('/', (req, res) => {
   res.json({ message: 'Healthcare Management System API is running' });
 });
 
-// --- Authentication Routes ---
+// Laboratory & Pharmacy routes
+app.use('/api/laboratory-pharmacy', laboratoryPharmacyRoutes);
+
+// Authentication Routes
 
 // Register new user
 app.post('/api/register', async (req, res) => {
   try {
     const { username, email, password, role } = req.body;
-    
+
     if (!username || !email || !password) {
       return res.status(400).json({ message: 'All fields are required: username, email, password' });
     }
-    
+
     // Check if user already exists
     const existingUser = await User.findByEmail(email);
     if (existingUser) {
       return res.status(409).json({ message: 'User with this email already exists' });
     }
-    
+
     const existingUserByUsername = await User.findByUsername(username);
     if (existingUserByUsername) {
       return res.status(409).json({ message: 'Username already taken' });
     }
-    
+
     // Create new user
     const user = await User.create({ username, email, password, role });
-    
+
     return res.status(201).json({
       message: 'User registered successfully',
       user: { id: user.id, username: user.username, email: user.email, role: user.role }
@@ -72,23 +89,23 @@ app.post('/api/register', async (req, res) => {
 app.post('/api/login', async (req, res) => {
   try {
     const { username, password } = req.body;
-    
+
     if (!username || !password) {
       return res.status(400).json({ message: 'Username and password are required' });
     }
-    
+
     const user = await User.findByUsername(username);
     if (!user) {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
-    
+
     const isPasswordValid = await User.checkPassword(password, user.password);
     if (!isPasswordValid) {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
-    
+
     const token = generateToken(user.id, user.role);
-    
+
     return res.json({
       message: 'Login successful',
       token,
@@ -98,7 +115,7 @@ app.post('/api/login', async (req, res) => {
     console.error('Login error:', ex);
     res.status(500).json({ message: 'Error during login. Please try again.' });
   }
-};
+});
 
 // Get current user profile
 app.get('/api/profile', authenticate, async (req, res) => {
@@ -125,7 +142,7 @@ app.post('/api/logout', authenticate, (req, res) => {
   return res.json({ message: 'Logged out successfully' });
 });
 
-// --- Role-Based Protected Routes ---
+// Role-Based Protected Routes
 
 // Admin-only routes
 app.get('/api/admin/dashboard', authenticate, authorize('admin'), (req, res) => {
@@ -175,10 +192,10 @@ app.patch('/api/users/:id/role', authenticate, authorize('admin'), async (req, r
   try {
     const { id } = req.params;
     const { role } = req.body;
-    
+
     await User.updateRole(id, role);
     const user = await User.findById(id);
-    
+
     return res.json({
       message: 'User role updated successfully',
       user: { id: user.id, username: user.username, email: user.email, role: user.role }
@@ -209,39 +226,6 @@ app.listen(PORT, () => {
 
 module.exports = app;
 
-// Helper functions for authentication middleware
 function generateToken(userId, role) {
   return `temp-token-${userId}-${role}`;
 }
-
-const authenticate = async (req, res, next) => {
-  try {
-    const authHeader = req.headers['authorization'];
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      return res.status(401).json({ message: 'Access denied. No token provided.' });
-    }
-    const token = authHeader.split(' ')[1];
-    // In a real app, verify JWT signature
-    // For now, attach a default user context
-    req.user = { userId: 1, role: 'patient' }; // This would be properly decoded from JWT
-    next();
-  } catch (ex) {
-    res.status(400).json({ message: 'Invalid token' });
-  }
-};
-
-const authorize = async (roles) => {
-  return async (req, res, next) => {
-    try {
-      if (!req.user || !req.user.role) {
-        return res.status(403).json({ message: 'Access denied. No role assigned.' });
-      }
-      if (!roles.includes(req.user.role)) {
-        return res.status(403).json({ message: 'Access denied. Insufficient permissions.' });
-      }
-      next();
-    } catch (ex) {
-      res.status(500).json({ message: 'Error checking permissions' });
-    }
-  };
-};
