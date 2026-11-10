@@ -1,5 +1,5 @@
 import React from 'react';
-import { Menu, Settings, Users, Layout, Users2, Stethoscope, Building2, Heart, Shield, Folder, LogOut, FileText, Package, Heartbeat, Clipboard, BarChart2, TrendingUp, Users as UsersIcon, Activity, LogOut as LogOutIcon } from 'lucide-react';
+import { Menu, Settings, Users, Layout, Users2, Stethoscope, Users as UsersIcon, Users as UsersMultiple, Building2, Heart, Shield, Folder, LogOut, FileText, Package, Heartbeat, Clipboard, BarChart2, TrendingUp, Activity, LogOut as LogOutIcon } from 'lucide-react';
 
 const healthcareColors = {
   dark: '#1e293b',
@@ -56,6 +56,24 @@ export const Sidebar = ({
       >
         <Stethoscope className="w-5 h-5 mr-2"/>
         Doctors
+      </button>
+      <button 
+        onClick={() => setCurrentPage('doctor-management')}
+        className={`flex items-center px-3 py-2 rounded-md text-sm font-medium ${
+          currentPage === 'doctor-management' ? 'bg-healthcare-accent text-white' : 'text-healthcare-light hover:bg-healthcare-light/10 transition-colors'
+        }`}
+      >
+        <UsersIcon className="w-5 h-5 mr-2"/>
+        Doctor Mgmt
+      </button>
+      <button 
+        onClick={() => setCurrentPage('staff-management')}
+        className={`flex items-center px-3 py-2 rounded-md text-sm font-medium ${
+          currentPage === 'staff-management' ? 'bg-healthcare-accent text-white' : 'text-healthcare-light hover:bg-healthcare-light/10 transition-colors'
+        }`}
+      >
+        <UsersMultiple className="w-5 h-5 mr-2"/>
+        Staff Mgmt
       </button>
       <button 
         onClick={() => setCurrentPage('appointments')}
