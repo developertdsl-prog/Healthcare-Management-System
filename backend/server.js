@@ -4,6 +4,8 @@ const adminRoutes = require('./routes/admin');
 const patientRoutes = require('./routes/patients');
 const doctorRoutes = require('./routes/doctors');
 const appointmentRoutes = require('./routes/appointments');
+const medicalRecordsRoutes = require('./routes/medical-records');
+const billingRoutes = require('./routes/billing');
 const app = express();
 
 app.use(express.json());
@@ -19,6 +21,12 @@ app.use('/api/doctors', doctorRoutes);
 
 // Appointment routes
 app.use('/api/appointments', appointmentRoutes);
+
+// Medical records routes
+app.use('/api/medical-records', medicalRecordsRoutes);
+
+// Billing routes
+app.use('/api/billing', billingRoutes);
 
 // Health check route
 app.get('/', (req, res) => {
@@ -90,7 +98,7 @@ app.post('/api/login', async (req, res) => {
     console.error('Login error:', ex);
     res.status(500).json({ message: 'Error during login. Please try again.' });
   }
-});
+};
 
 // Get current user profile
 app.get('/api/profile', authenticate, async (req, res) => {
@@ -200,3 +208,40 @@ app.listen(PORT, () => {
 });
 
 module.exports = app;
+
+// Helper functions for authentication middleware
+function generateToken(userId, role) {
+  return `temp-token-${userId}-${role}`;
+}
+
+const authenticate = async (req, res, next) => {
+  try {
+    const authHeader = req.headers['authorization'];
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return res.status(401).json({ message: 'Access denied. No token provided.' });
+    }
+    const token = authHeader.split(' ')[1];
+    // In a real app, verify JWT signature
+    // For now, attach a default user context
+    req.user = { userId: 1, role: 'patient' }; // This would be properly decoded from JWT
+    next();
+  } catch (ex) {
+    res.status(400).json({ message: 'Invalid token' });
+  }
+};
+
+const authorize = async (roles) => {
+  return async (req, res, next) => {
+    try {
+      if (!req.user || !req.user.role) {
+        return res.status(403).json({ message: 'Access denied. No role assigned.' });
+      }
+      if (!roles.includes(req.user.role)) {
+        return res.status(403).json({ message: 'Access denied. Insufficient permissions.' });
+      }
+      next();
+    } catch (ex) {
+      res.status(500).json({ message: 'Error checking permissions' });
+    }
+  };
+};
