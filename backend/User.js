@@ -1,4 +1,5 @@
 const db = require('./db');
+const bcrypt = require('bcrypt');
 
 const User = {
   // Find user by email
@@ -24,9 +25,10 @@ const User = {
   // Create new user
   create: async ({ username, email, password, role }) => {
     try {
+      const hashedPassword = await bcrypt.hash(password, 10);
       const [result] = await db.query(
         'INSERT INTO users (username, email, password, role) VALUES (?, ?, ?, ?)',
-        [username, email, password, role]
+        [username, email, hashedPassword, role]
       );
       return { id: result.insertId, username, email, role };
     } catch (err) {

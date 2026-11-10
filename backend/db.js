@@ -10,10 +10,4 @@ const pool = mysql.createPool({
   queueLimit: 0,
 });
 
-// Get a client from the pool (alias for compatibility)
-pool.getClient = async () => {
-  const connection = await pool.getConnection();
-  return connection;
-};
-
 module.exports = pool;
