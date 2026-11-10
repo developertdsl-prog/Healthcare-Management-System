@@ -1,5 +1,5 @@
 import React from 'react';
-import { Menu, Settings, Users, Layout, Users2, Stethoscope, Building2, Heart, Shield, Folder, LogOut, FileText, Package, Heartbeat, Clipboard, BarChart2, TrendingUp, Users as UsersIcon, Activity, LogOut as LogOutIcon } from 'lucide-react';
+import { Menu, Settings, Users, Layout, Users2, Stethoscope, Building2, Heart, Shield, Folder, LogOut, FileText, Package, Heartbeat, Clipboard, BarChart2, TrendingUp, Users as UsersIcon, Activity, LogOut as LogOutIcon, CalendarDays } from 'lucide-react';
 
 const healthcareColors = {
   dark: '#1e293b',
@@ -31,9 +31,9 @@ export const Sidebar = ({
     <nav className="flex flex-col pt-6 space-y-2 px-2">
       <button 
         onClick={() => setCurrentPage('dashboard')}
-        className={`flex items-center px-3 py-2 rounded-md text-sm font-medium ${
+        className={`flex items-center px-3 py-2 rounded-md text-sm font-medium ${{
           currentPage === 'dashboard' ? 'bg-healthcare-accent text-white' : 'text-healthcare-light hover:bg-healthcare-light/10 transition-colors'
-        }`}
+        }`}'}
         aria-current="page"
       >
         <Layout className="w-5 h-5 mr-2"/>
@@ -41,45 +41,45 @@ export const Sidebar = ({
       </button>
       <button 
         onClick={() => setCurrentPage('patients')}
-        className={`flex items-center px-3 py-2 rounded-md text-sm font-medium ${
+        className={`flex items-center px-3 py-2 rounded-md text-sm font-medium ${{
           currentPage === 'patients' ? 'bg-healthcare-accent text-white' : 'text-healthcare-light hover:bg-healthcare-light/10 transition-colors'
-        }`}
+        }`}'}
       >
         <Users2 className="w-5 h-5 mr-2"/>
         Patients
       </button>
       <button 
         onClick={() => setCurrentPage('doctors')}
-        className={`flex items-center px-3 py-2 rounded-md text-sm font-medium ${
+        className={`flex items-center px-3 py-2 rounded-md text-sm font-medium ${{
           currentPage === 'doctors' ? 'bg-healthcare-accent text-white' : 'text-healthcare-light hover:bg-healthcare-light/10 transition-colors'
-        }`}
+        }`}'}
       >
         <Stethoscope className="w-5 h-5 mr-2"/>
         Doctors
       </button>
       <button 
-        onClick={() => setCurrentPage('appointments')}
-        className={`flex items-center px-3 py-2 rounded-md text-sm font-medium ${
-          currentPage === 'appointments' ? 'bg-healthcare-accent text-white' : 'text-healthcare-light hover:bg-healthcare-light/10 transition-colors'
-        }`}
+        onClick={() => setCurrentPage('appointment-management')}
+        className={`flex items-center px-3 py-2 rounded-md text-sm font-medium ${{
+          currentPage === 'appointment-management' ? 'bg-healthcare-accent text-white' : 'text-healthcare-light hover:bg-healthcare-light/10 transition-colors'
+        }`}'}
       >
-        <Calendar className="w-5 h-5 mr-2"/>
+        <CalendarDays className="w-5 h-5 mr-2"/>
         Appointments
       </button>
       <button 
         onClick={() => setCurrentPage('records')}
-        className={`flex items-center px-3 py-2 rounded-md text-sm font-medium ${
+        className={`flex items-center px-3 py-2 rounded-md text-sm font-medium ${{
           currentPage === 'records' ? 'bg-healthcare-accent text-white' : 'text-healthcare-light hover:bg-healthcare-light/10 transition-colors'
-        }`}
+        }`}'}
       >
         <FileText className="w-5 h-5 mr-2"/>
         Records
       </button>
       <button 
         onClick={() => setCurrentPage('billing')}
-        className={`flex items-center px-3 py-2 rounded-md text-sm font-medium ${
+        className={`flex items-center px-3 py-2 rounded-md text-sm font-medium ${{
           currentPage === 'billing' ? 'bg-healthcare-accent text-white' : 'text-healthcare-light hover:bg-healthcare-light/10 transition-colors'
-        }`}
+        }`}'}
       >
         <TrendingUp className="w-5 h-5 mr-2"/>
         Billing
@@ -127,7 +127,7 @@ export const DashboardLayout = ({
   setCurrentPage 
 }) => (
   <div className="relative min-h-screen">
-    <Sidebar 
+    <Sidebar> 
       isOpen={!!currentPage} 
       setIsOpen={() => {}}
       currentPage={currentPage}

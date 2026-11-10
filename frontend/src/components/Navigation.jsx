@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { 
   Layout, Users2, Stethoscope, Calendar, Shield, FileText, Package, 
   TrendingUp, Users as UsersIcon, Activity, LogOut, 
-  Home, Settings, User, Mail, Heart, Clipboard 
+  Home, Settings, User, Mail, Heart, Clipboard, CalendarDays 
 } from 'lucide-react';
 
 const NavItem = ({ 
@@ -54,8 +54,8 @@ export const Navigation = ({ currentPage, setCurrentPage }) => (
     />
     <NavItem 
       label="Appointments" 
-      icon={Calendar} 
-      onSelect={(page) => setCurrentPage('appointments')} 
+      icon={CalendarDays} 
+      onSelect={(page) => setCurrentPage('appointment-management')} 
       currentPage={currentPage} 
       setCurrentPage={setCurrentPage}
     />
