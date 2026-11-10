@@ -29,11 +29,11 @@ const AdminDashboard = () => (
       <div className="bg-white rounded-xl p-6 shadow-sm border border-healthcare-light/20">
         <div className="flex items-start">
           <div className="w-12 h-12 rounded-xl bg-healthcare-light/10 flex items-center justify-center flex-shrink-0">
-            <Calendar className="w-6 h-6 text-healthcare-light/6"/>
+            <Users2 className="w-6 h-6 text-healthcare-light"/>
           </div>
           <div className="ml-4">
-            <h3 className="text-semibold text-healthcare-light">Total Appointments</h3>
-            <p className="text-3xl font-bold text-healthcare-light">3,982</p>
+            <h3 className="text-semibold text-healthcare-light">Total Staff</h3>
+            <p className="text-3xl font-bold text-healthcare-light">42</p>
           </div>
         </div>
       </div>
