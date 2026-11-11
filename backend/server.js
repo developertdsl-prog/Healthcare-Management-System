@@ -44,7 +44,7 @@ const authorize = (roles) => {
       res.status(500).json({ message: 'Error checking permissions' });
     }
   }
-};
+}
 
 app.use(express.json());
 
@@ -75,8 +75,6 @@ app.get('/', (req, res) => {
 });
 
 // --- Authentication Routes ---
-
-// Register new user
 app.post('/api/register', async (req, res) => {
   try {
     const { username, email, password, role } = req.body;
@@ -167,8 +165,6 @@ app.post('/api/logout', authenticate, (req, res) => {
 });
 
 // --- Role-Based Protected Routes ---
-
-// Admin-only routes
 app.get('/api/admin/dashboard', authenticate, authorize('admin'), (req, res) => {
   return res.json({
     message: 'Admin Dashboard',
